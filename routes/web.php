@@ -38,3 +38,28 @@ Route::get('/sair', function(){
     Auth::logout();
     return redirect('/entrar');
 });
+
+Route::get('/visualizando-email', function(){
+   return new \App\Mail\NovaSerie(
+       'Arow',
+       5,
+       10
+   );
+});
+
+Route::get('/enviando-email', function(){
+    $email = new \App\Mail\NovaSerie(
+        'Arow',
+        5,
+        10
+    );
+
+    $email->subject = 'Nova Série Adicionada';
+    $user = (object) [
+        'email' => 'jheorgenes@gmail.com',
+        'name' => 'Jheorgenes'
+    ];
+
+    \Illuminate\Support\Facades\Mail::to($user)->send($email);
+    return 'Email enviado!';
+});
