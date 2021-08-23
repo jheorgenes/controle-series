@@ -14,13 +14,13 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $listen = [ //Ouve a chamada do evento e dispara os eventos que estiverem nesse array
+    protected $listen = [ //Ouvinte contendo array com todos os eventos que serão disparados
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
         \App\Events\NovaSerie::class => [ //Disparando evento NovaSerie
-            \App\Listeners\EnviarEmailNovaSerieCadastrada::class, //Executando o ouvinte de envio de e-mail
-            \App\Listeners\LogNovaSerieCadastrada::class, //Executando o ouvinte de registro de log
+            \App\Listeners\EnviarEmailNovaSerieCadastrada::class, //Executa o ouvinte de envio de e-mail
+            \App\Listeners\LogNovaSerieCadastrada::class, //Executa o ouvinte de registro de log
         ]
     ];
 

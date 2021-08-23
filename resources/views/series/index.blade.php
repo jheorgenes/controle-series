@@ -17,8 +17,10 @@
                    d-flex
                    justify-content-between
                    align-items-center">
-            <span id="nome-serie-{{ $serie->id }}">{{ $serie->nome }}</span>
-
+            <div>
+                <img src="{{ $serie->capa_url }}" class="img-thumbnail" height="100px" width="100px"><!-- Incluíndo a imagem da capa e acessando o mutator do laravel -->
+                <span id="nome-serie-{{ $serie->id }}">{{ $serie->nome }}</span>
+            </div>
             <div class="input-group w-50" hidden id="input-nome-serie-{{ $serie->id }}">
                 <input type="text" class="form-control" value="{{ $serie->nome }}">
                 <div class="input-group-append">

@@ -8,7 +8,7 @@ class CreateFailedJobsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+     * Cria uma tabela de falha de jobs para quando ocorrer falha de processamento de uma fila
      * @return void
      */
     public function up()

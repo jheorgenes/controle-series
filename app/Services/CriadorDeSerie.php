@@ -13,12 +13,17 @@ class CriadorDeSerie
      * @param string $nomeSerie
      * @param int $qtdTemporadas
      * @param int $epPorTemporada
+     * @param string $capa
+     * A interrogação na frente do tipo representa que o tipo pode ser opcional, ou seja, pode ou não ser passado o tipo string
      * return Model Serie
      */
-    public function criarSerie(string $nomeSerie, int $qtdTemporadas, int $epPorTemporada): Serie
+    public function criarSerie(string $nomeSerie, int $qtdTemporadas, int $epPorTemporada, ?string $capa): Serie
     {
         DB::beginTransaction(); //Iniciando uma transação
-            $serie = Serie::create(['nome' => $nomeSerie]);
+            $serie = Serie::create([
+                'nome' => $nomeSerie,
+                'capa' => $capa
+            ]);
             $this->criaTemporadas($qtdTemporadas, $epPorTemporada, $serie);
         DB::commit(); //Finalizando transação com o commit
 

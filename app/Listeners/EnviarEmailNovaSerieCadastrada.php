@@ -7,7 +7,10 @@ use App\User;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class EnviarEmailNovaSerieCadastrada
+/**
+ *Quando a classe implementa ShouldQueue, automaticamente a classe vai jogar o processo para uma fila
+ */
+class EnviarEmailNovaSerieCadastrada implements ShouldQueue
 {
     /**
      * Create the event listener.

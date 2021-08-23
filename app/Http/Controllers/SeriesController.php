@@ -50,19 +50,26 @@ class SeriesController extends Controller
      */
     public function store(SeriesFormRequest $request, CriadorDeSerie $criadorDeSerie)
     {
+        $capa = null; //Define nulo por segurança
+        if($request->hasFile('capa')){ //Se houver upload (função hasFile valida se tem arquivo de upload e retorna true ou false)
+            $capa = $request->file('capa')->store('serie'); //Busca do request um arquivo de upload e adiciona no store (diretório) de série
+        }
+
         $serie = $criadorDeSerie->criarSerie(
             $request->nome,
             $request->qtd_temporadas,
-            $request->ep_por_temporada
+            $request->ep_por_temporada,
+            $capa //Enviando o arquivo upload da capa na Série
         );
 
+        /* Criando um objeto de Evento */
         $eventoNovaSerie = new NovaSerie(
             $request->nome,
             $request->qtd_temporadas,
             $request->ep_por_temporada
         );
 
-        event($eventoNovaSerie);
+        event($eventoNovaSerie); //Executando um evento
 
         $request->session()
             ->flash( //Exibe enquanto durar uma requisição

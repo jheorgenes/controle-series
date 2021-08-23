@@ -6,7 +6,10 @@ use App\Events\NovaSerie;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class LogNovaSerieCadastrada
+/**
+ *Quando a classe implementa ShouldQueue, automaticamente a classe vai jogar o processo para uma fila
+ */
+class LogNovaSerieCadastrada implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -24,9 +27,9 @@ class LogNovaSerieCadastrada
      * @param  NovaSerie  $event
      * @return void
      */
-    public function handle(NovaSerie $event)
+    public function handle(NovaSerie $event) //Recebendo serviço de evento como argumento
     {
-        $nomeSerie = $event->nomeSerie;
-        \Log::info('Serie nova cadastrada ' . $nomeSerie);
+        $nomeSerie = $event->nomeSerie; //Adicionando dados
+        \Log::info('Serie nova cadastrada ' . $nomeSerie); //Gerando log com uma string e o nome da série
     }
 }

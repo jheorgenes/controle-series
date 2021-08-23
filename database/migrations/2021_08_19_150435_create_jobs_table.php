@@ -8,7 +8,7 @@ class CreateJobsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+     * Cria uma tabela jobs com as filas que serão processadas
      * @return void
      */
     public function up()

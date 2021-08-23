@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
 use App\{Serie, Temporada, Episodio};
+use Storage; //Acessor de Upload de Arquivos. Utiliza fascade para realizar algumas operações, como acessar a url, deletar o arquivo, etc.
 
 class RemovedorDeSerie
 {
@@ -26,6 +27,10 @@ class RemovedorDeSerie
             $nomeSerie = $serie->nome;
             $this->removerTemporadas($serie); //Chamando método interno
             $serie->delete(); //terceiro deleta serie
+
+            if($serie->capa) { //Verifica se tem arquivo de upload da capa
+                Storage::delete($serie->capa); //Utiliza o fascade para deletar uma Capa de Série
+            }
         });
         return $nomeSerie;
     }
