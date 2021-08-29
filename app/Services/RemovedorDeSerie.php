@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
-use App\{Serie, Temporada, Episodio};
+use App\{Events\SerieApagada, Jobs\ExcluirCapaSerie, Serie, Temporada, Episodio};
 use Storage; //Acessor de Upload de Arquivos. Utiliza fascade para realizar algumas operações, como acessar a url, deletar o arquivo, etc.
 
 class RemovedorDeSerie
@@ -24,13 +24,15 @@ class RemovedorDeSerie
          **/
         DB::transaction(function() use($serieId, &$nomeSerie){ //&$nomeSerie passado como referência
             $serie = Serie::find($serieId); //Buscando Serie
+            $serieObj = (object) $serie->toArray(); //Transformando série em array e depois transformando em objeto.
+
             $nomeSerie = $serie->nome;
             $this->removerTemporadas($serie); //Chamando método interno
             $serie->delete(); //terceiro deleta serie
 
-            if($serie->capa) { //Verifica se tem arquivo de upload da capa
-                Storage::delete($serie->capa); //Utiliza o fascade para deletar uma Capa de Série
-            }
+            $evento = new SerieApagada($serieObj); //Criando dados do Evento com os dados da Série
+            event($evento); //Emitindo evento
+            ExcluirCapaSerie::dispatch($serieObj); //Chamando a classe Job e disparando (enviando os dados pro job através de injeção de dependência) um objeto stdClass de $serieObj
         });
         return $nomeSerie;
     }

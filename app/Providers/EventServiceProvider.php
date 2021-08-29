@@ -21,7 +21,12 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\NovaSerie::class => [ //Disparando evento NovaSerie
             \App\Listeners\EnviarEmailNovaSerieCadastrada::class, //Executa o ouvinte de envio de e-mail
             \App\Listeners\LogNovaSerieCadastrada::class, //Executa o ouvinte de registro de log
+        ],
+        /* //Deixando de disparar exlusão da imagem por evento e executando via job
+        \App\Events\SerieApagada::class => [
+            \App\Listeners\ExcluirCapaSerie::class,
         ]
+        */
     ];
 
     /**
